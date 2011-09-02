@@ -27,13 +27,16 @@ config=${CONFIG-/etc/chef/solr.rb}
 pidfile=${PIDFILE-/var/run/chef/solr.pid}
 lockfile=${LOCKFILE-/var/lock/subsys/$prog}
 logfile=${LOGFILE-/var/log/chef/solr.log}
+user=${SERVER_USER-chef}
+group=${SERVER_GROUP-chef}
 options=${OPTIONS-}
 
 start() {
     [ -x $exec ] || exit 5
     [ -f $config ] || exit 6
     echo -n $"Starting $prog: "
-    daemon $prog -d -c "$config" -L "$logfile" -P "$pidfile" "$options"
+    daemon $prog -d -c "$config" -L "$logfile" -P "$pidfile" \
+        -u "$user" -g "$group" "$options"
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile

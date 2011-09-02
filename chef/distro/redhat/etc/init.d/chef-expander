@@ -27,13 +27,15 @@ config=${CONFIG-/etc/chef/expander.rb}
 pidfile=${PIDFILE-/var/run/chef/expander.pid}
 lockfile=${LOCKFILE-/var/lock/subsys/$prog}
 logfile=${LOGFILE-/var/log/chef/expander.log}
+user=${SERVER_USER-chef}
 options=${OPTIONS-}
 
 start() {
     [ -x $exec ] || exit 5
     [ -f $config ] || exit 6
     echo -n $"Starting $prog: "
-    daemon $prog -d -c "$config" -L "$logfile" -P "$pidfile" "$options"
+    daemon --user "$user" $prog -d -c "$config" -L "$logfile" -P "$pidfile" \
+        "$options"
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile

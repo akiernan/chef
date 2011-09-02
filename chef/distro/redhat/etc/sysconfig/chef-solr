@@ -4,5 +4,7 @@
 #PIDFILE=/var/run/chef/solr.pid
 #LOCKFILE=/var/lock/subsys/chef-solr
 #LOGFILE=/var/log/chef/solr.log
+#SERVER_USER=chef
+#SERVER_GROUP=chef
 # Options for Java. Need to start with -j followed by options.
 #OPTIONS="-j "
